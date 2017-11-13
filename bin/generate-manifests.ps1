@@ -104,19 +104,19 @@ $langLabelHash = @{
 # - pleiades_cpp-win-32bit.zip.html
 # - pleiades_cpp-win-32bit_jre.zip.html
 function match_lang_os_arch_edition($matches, $lang, $os, $arch, $edition) {
-	if ($matches['lang']) {
-	    $lang = $matches['lang']
+    if ($matches['lang']) {
+        $lang = $matches['lang']
     }
-	if ($matches['os']) {
-	    $os = $matches['os']
+    if ($matches['os']) {
+        $os = $matches['os']
     }
-	if ($matches['arch']) {
-		$arch = $matches['arch']
-	}
-	if ($matches['jre']) {
-		$edition = "full"
-	}
-	return $lang, $os, $arch, $edition
+    if ($matches['arch']) {
+        $arch = $matches['arch']
+    }
+    if ($matches['jre']) {
+        $edition = "full"
+    }
+    return $lang, $os, $arch, $edition
 }
 
 # Fetch majorVersions
