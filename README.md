@@ -1,4 +1,4 @@
-# scoop-pleiades
+# scoop-pleiades [![Build status](https://ci.appveyor.com/api/projects/status/6jgpvtxarwl8lkki?svg=true)](https://ci.appveyor.com/project/jfut/scoop-pleiades)
 
 The "pleiades" bucket for [Scoop](http://scoop.sh).
 
