@@ -289,7 +289,10 @@ $manifestHash.Keys | ForEach-Object {
     $manifest = $manifest -replace "%langLabel%", $langLabelHash[$archHash['common']['lang']]
     $manifest = $manifest -replace "%majorVersion%", $archHash['common']['majorVersion']
 
-    $manifest | Out-File -FilePath "$PSScriptRoot\..\$key.json" -Encoding utf8
+    #$manifest | Out-File -FilePath "$PSScriptRoot\..\$key.json" -Encoding utf8
+    $manifest | Out-String `
+        | % { [Text.Encoding]::UTF8.GetBytes($_) } `
+        | Set-Content -Path "$PSScriptRoot\..\$key.json" -Encoding Byte
 }
 
 # Use scoop's checkver script to autoupdate the manifestHash
