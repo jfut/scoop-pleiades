@@ -1,15 +1,15 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "4.7.1a.v20171019",
+    "version": "4.7.2.v20171220",
     "architecture": {
         "64bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.1-python-win-64bit_20171019.zip#/dl.7z",
-            "hash": "md5:31ff94482b83662e57bac7078148e4c6"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.2-python-win-64bit_20171220.zip#/dl.7z",
+            "hash": "md5:5ed1807ab3b66c2e8d402de038857dac"
         },
         "32bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.1-python-win-32bit_20171019.zip#/dl.7z",
-            "hash": "md5:a22bbe46132f2a9adabd2dbe2857f7b1"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.2-python-win-32bit_20171220.zip#/dl.7z",
+            "hash": "md5:c6e303b8fae115c23eb21087dfa1d22e"
         }
     },
     "extract_dir": "pleiades",
@@ -20,7 +20,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One Python 4.7.1a.v20171019"
+            "Pleiades All in One Python 4.7.2.v20171220"
         ]
     ],
     "post_install": "

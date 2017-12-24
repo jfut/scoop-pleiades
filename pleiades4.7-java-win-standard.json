@@ -1,15 +1,15 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "4.7.1a.v20171019",
+    "version": "4.7.2.v20171220",
     "architecture": {
         "64bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.1-java-win-64bit_20171019.zip#/dl.7z",
-            "hash": "md5:1a43434647af3dc8a4829dfdce3db882"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.2-java-win-64bit_20171220.zip#/dl.7z",
+            "hash": "md5:5012984762c76883ba10178aea13842e"
         },
         "32bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.1-java-win-32bit_20171019.zip#/dl.7z",
-            "hash": "md5:ffd101901e5b545526718889be0a62a7"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.2-java-win-32bit_20171220.zip#/dl.7z",
+            "hash": "md5:097f4e3bf8259d6cab4d6ed7722b3084"
         }
     },
     "extract_dir": "pleiades",
@@ -20,7 +20,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One Java 4.7.1a.v20171019"
+            "Pleiades All in One Java 4.7.2.v20171220"
         ]
     ],
     "post_install": "

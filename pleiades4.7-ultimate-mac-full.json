@@ -1,9 +1,9 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "4.7.1a.v20171019",
-    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.1-ultimate-mac-jre_20171019.dmg#/dl.7z",
-    "hash": "md5:87ee63ba57234584fdc8550cb32ae87d",
+    "version": "4.7.2.v20171220",
+    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.2-ultimate-mac-jre_20171220.dmg#/dl.7z",
+    "hash": "md5:7ca629d505eeb655cbe542961c970a5a",
     "extract_dir": "pleiades",
     "persist": [
         "eclipse\\configuration",
@@ -12,7 +12,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One Ultimate 4.7.1a.v20171019"
+            "Pleiades All in One Ultimate 4.7.2.v20171220"
         ]
     ],
     "post_install": "
