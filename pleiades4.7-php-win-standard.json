@@ -1,15 +1,15 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "4.7.2.v20171220",
+    "version": "4.7.2.v20171225",
     "architecture": {
         "64bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.2-php-win-64bit_20171220.zip#/dl.7z",
-            "hash": "md5:361a64694a33d69706df78615d1f048b"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.2-php-win-64bit_20171225.zip#/dl.7z",
+            "hash": "md5:7bf29c9aae4cbfd8c7c141a357fe100a"
         },
         "32bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.2-php-win-32bit_20171220.zip#/dl.7z",
-            "hash": "md5:6e64a7a39ce77ce99e33ecb29ce03de3"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.7/pleiades-4.7.2-php-win-32bit_20171225.zip#/dl.7z",
+            "hash": "md5:638e374a6f14bab799292883011cb3c0"
         }
     },
     "extract_dir": "pleiades",
@@ -20,7 +20,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One PHP 4.7.2.v20171220"
+            "Pleiades All in One PHP 4.7.2.v20171225"
         ]
     ],
     "post_install": "
