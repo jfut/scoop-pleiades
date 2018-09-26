@@ -198,14 +198,29 @@ $majorVersions | ForEach-Object {
         }
 
         # Fetch version
+        $version = ""
         $versionHtml = $wc.downloadstring("$baseVersionUrl$majorVersion.html")
-        if ($versionHtml -match "Pleiades All in One (?<version>[\d.]+.*\.v[\d]+)") {
-            $version = $matches['version']
+        # format: Pleiades All in One 4.8.0 (Windows 20180923, Mac 20180627)
+        if ($os -match "win") {
+            if ($versionHtml -match "Pleiades All in One (?<fileVersion>\d[\w\.]+) \(Windows (?<date>\d+)") {
+                $version = $matches['fileVersion'] + ".v" + $matches['date']
+            }
+        } else {
+            if ($versionHtml -match "Pleiades All in One (?<fileVersion>\d[\w\.]+).* Mac (?<date>\d+)") {
+                $version = $matches['fileVersion'] + ".v" + $matches['date']
+            }
+        }
+        # format: Pleiades All in One 4.6.3.v20170422
+        if ($version -match "") {
+            if ($versionHtml -match "Pleiades All in One (?<version>[\d.]+.*\.v[\d]+)") {
+                $version = $matches['version']
+            }
         }
         #write-host " - version, $version"
 
         # Fetch file name and hash
         $downloadUrl = "$baseUrl$majorVersion/$link"
+        #write-host " - downloadUrl, $downloadUrl"
         # Special case
         if ($majorVersion -eq "4.5" -and $link -eq "pleiades_java-32bit_jre.zip.html") {
             $downloadUrl = "$baseUrl$majorVersion/pleiades_java-32bit_jre.zip_MD5.html"
