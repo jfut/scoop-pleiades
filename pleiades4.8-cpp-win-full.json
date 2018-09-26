@@ -1,15 +1,15 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "4.8.0.v20180627",
+    "version": "4.8.0.v20180923",
     "architecture": {
         "64bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.8/pleiades-4.8.0-cpp-win-64bit-jre_20180627.zip#/dl.7z",
-            "hash": "md5:820a120b9aff21fc2d5c441dd7810ef9"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.8/pleiades-4.8.0-cpp-win-64bit-jre_20180923.zip#/dl.7z",
+            "hash": "md5:81235e39f8db84a77f8a6bbd217301ec"
         },
         "32bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.8/pleiades-4.8.0-cpp-win-32bit-jre_20180627.zip#/dl.7z",
-            "hash": "md5:b87d2ac3a576766b49011c30b14aa93d"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/4.8/pleiades-4.8.0-cpp-win-32bit-jre_20180923.zip#/dl.7z",
+            "hash": "md5:7f993832d24d907f4e9a1bd288de5a4d"
         }
     },
     "extract_dir": "pleiades",
@@ -20,7 +20,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One CDT 4.8.0.v20180627"
+            "Pleiades All in One CDT 4.8.0.v20180923"
         ]
     ],
     "post_install": "
