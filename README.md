@@ -12,6 +12,6 @@ scoop bucket add pleiades https://github.com/jfut/scoop-pleiades.git
 
 # Official buckets
 
-- [main bucket](https://github.com/lukesampson/scoop)
+- [main bucket](https://github.com/ScoopInstaller/Main)
 - [extras bucket](https://github.com/lukesampson/scoop-extras)
 
