@@ -104,6 +104,7 @@ $checkverRegex = @{
     base_version = "Pleiades All in One ((?<fileVersion>[\\d.]+).*\\.v(?<date>[\\d]+))";
     base_version_win = "Pleiades All in One ((?<fileVersion>[\\w\\d\\.]+) \\(Windows (?<date>[\\w\\d\\.]+).+\\))";
     base_version_mac = "Pleiades All in One ((?<fileVersion>[\\w\\d\\.]+) \\(.+, Mac (?<date>[\\w\\d\\.]+)\\))";
+    date_version = "((?<fileVersion>[\\d]{4}-[\\d]{2})\\.(?<date>[\\d]{8}))";
 }
 
 # [4.6 or later]
@@ -131,15 +132,17 @@ $html = $wc.downloadstring("$baseUrl")
 
 # TODO: 3.x support
 # 4.3 - 4.8, 20YY
-$versionMatch = ([regex]">(4[\d.]+|20[\d\d])/").matches($html)
+$versionMatch = ([regex]">(4[\d.]+|20\d\d)/").matches($html)
 $majorVersions = @()
 $versionMatch |% {
     $majorVersions += $_.groups[1].value
 }
 # debug
 #$majorVersions = $("4.2")
+#$majorVersions = $("4.3", "4.4")
 #$majorVersions = $("4.5", "4.6", "4.7")
 #$majorVersions = $("4.7","4.8")
+#$majorVersions = $("2018")
 
 # Generate manifestHash
 $manifestHash = @{}
@@ -159,9 +162,9 @@ $majorVersions | ForEach-Object {
 
         # Fetch parameters
         $os = "win"
-        if ($majorVersion -ge "4.6") {
-            $arch = "noarch"
-        } else {
+        $arch = "noarch"
+        # [- 4.5] + not 2018
+        if ($majorVersion.Length -eq 3 -and $majorVersion -le "4.5") {
             $arch = "64bit"
         }
         $edition = "standard"
@@ -224,6 +227,14 @@ $majorVersions | ForEach-Object {
                 $version = $matches['version']
             }
         }
+        # [2018 or later]
+        # format: 2018-09.20181004
+        if ($majorVersion.Length -eq 4 -and $majorVersion -ge "2018") {
+            if ($versionHtml -match "(?<fileVersion>[\d]{4}-[\d]{2})\.(?<date>[\d]{8})") {
+                $version = $matches['fileVersion'] + "." + $matches['date']
+                # write-host " - $majorVersion version, $version, $date"
+            }
+        }
         #write-host " - version, $version"
 
         # Fetch file name and hash
@@ -243,19 +254,23 @@ $majorVersions | ForEach-Object {
         }
 
         # Detect checkver
+        # [4.2 - 4.6]
         $checkver_re = $checkverRegex['base_version']
-        if ($majorVersion -eq "4.7" -or $majorVersion -eq "4.8") {
+        # [4.7 - 4.8]
+        if ($majorVersion.Length -eq 3 -and ($majorVersion -eq "4.7" -or $majorVersion -eq "4.8")) {
             if ($os -eq "win") {
-                write-host " - checkver_re win"
                 $checkver_re = $checkverRegex['base_version_win']
             } else {
-                write-host " - checkver_re mac"
                 $checkver_re = $checkverRegex['base_version_mac']
             }
             # replace: 4.7.3a (Windows 20180411, Mac 20180618) -> 4.7.3a.v20180411
             $checkver_re += "`",`r`n" + @"
         "replace": "`${fileVersion}.v`${date}
 "@
+        }
+        # [2018 or later]
+        elseif ($majorVersion.Length -eq 4 -and $majorVersion -ge "2018") {
+            $checkver_re = $checkverRegex['date_version']
         }
 
         # Create manifest hash
@@ -297,6 +312,7 @@ $majorVersions | ForEach-Object {
 
 # pleiades-java-win-full.json
 # pleiades47-java-win-full.json
+# pleiades2018-java-win-full.json
 write-host "# outpue manifest file"
 $manifestHash.Keys | ForEach-Object {
     $key = $_
