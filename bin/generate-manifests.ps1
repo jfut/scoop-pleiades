@@ -27,7 +27,7 @@ $templateStringNoarch = @"
     ",
     "checkver": {
         "url": "http://mergedoc.osdn.jp/pleiades_distros%majorVersion%.html",
-        "re": "Pleiades All in One ((?<fileVersion>[\\d.]+).*\\.v(?<date>[\\d]+))"
+        "re": "%checkver_re%"
     },
     "autoupdate": {
         "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/`$majorVersion.`$minorVersion/pleiades-`$fileVersion-java-win-64bit-jre_`$date.zip#/dl.7z"
@@ -72,7 +72,7 @@ $templateString = @"
     ",
     "checkver": {
         "url": "http://mergedoc.osdn.jp/pleiades_distros%majorVersion%.html",
-        "re": "Pleiades All in One ((?<fileVersion>[\\d.]+).*\\.v(?<date>[\\d]+))"
+        "re": "%checkver_re%"
     },
     "autoupdate": {
         "architecture": {
@@ -100,6 +100,12 @@ $langLabelHash = @{
     ultimate = "Ultimate";
 }
 
+$checkverRegex = @{
+    base_version = "Pleiades All in One ((?<fileVersion>[\\d.]+).*\\.v(?<date>[\\d]+))";
+    base_version_win = "Pleiades All in One ((?<fileVersion>[\\w\\d\\.]+) \\(Windows (?<date>[\\w\\d\\.]+).+\\))";
+    base_version_mac = "Pleiades All in One ((?<fileVersion>[\\w\\d\\.]+) \\(.+, Mac (?<date>[\\w\\d\\.]+)\\))";
+}
+
 # [4.6 or later]
 # - pleiades_cpp-win-32bit.zip.html
 # - pleiades_cpp-win-32bit_jre.zip.html
@@ -124,7 +130,8 @@ $wc = new-object net.webclient
 $html = $wc.downloadstring("$baseUrl")
 
 # TODO: 3.x support
-$versionMatch = ([regex]">(4[\d.]+)/").matches($html)
+# 4.3 - 4.8, 20YY
+$versionMatch = ([regex]">(4[\d.]+|20[\d\d])/").matches($html)
 $majorVersions = @()
 $versionMatch |% {
     $majorVersions += $_.groups[1].value
@@ -132,6 +139,7 @@ $versionMatch |% {
 # debug
 #$majorVersions = $("4.2")
 #$majorVersions = $("4.5", "4.6", "4.7")
+#$majorVersions = $("4.7","4.8")
 
 # Generate manifestHash
 $manifestHash = @{}
@@ -234,6 +242,22 @@ $majorVersions | ForEach-Object {
             $hash = "md5:" + $matches['hash']
         }
 
+        # Detect checkver
+        $checkver_re = $checkverRegex['base_version']
+        if ($majorVersion -eq "4.7" -or $majorVersion -eq "4.8") {
+            if ($os -eq "win") {
+                write-host " - checkver_re win"
+                $checkver_re = $checkverRegex['base_version_win']
+            } else {
+                write-host " - checkver_re mac"
+                $checkver_re = $checkverRegex['base_version_mac']
+            }
+            # replace: 4.7.3a (Windows 20180411, Mac 20180618) -> 4.7.3a.v20180411
+            $checkver_re += "`",`r`n" + @"
+        "replace": "`${fileVersion}.v`${date}
+"@
+        }
+
         # Create manifest hash
         $key = "pleiades$majorVersion-$lang-$os-$edition"
         write-host " - [key] $key, $downloadFile, $hash"
@@ -255,6 +279,7 @@ $majorVersions | ForEach-Object {
                 lang = $lang;
                 os = $os;
                 edition = $edition;
+                checkver_re = $checkver_re;
             })
             $archHash.add($arch, @{
                 url = "$baseDownloadUrl$downloadFile";
@@ -265,6 +290,10 @@ $majorVersions | ForEach-Object {
         write-host ""
     }
 }
+
+#
+# Generate manifest files from $manifestHash
+#
 
 # pleiades-java-win-full.json
 # pleiades47-java-win-full.json
@@ -303,6 +332,7 @@ $manifestHash.Keys | ForEach-Object {
     $manifest = $manifest -replace "%version%", $archHash['common']['version']
     $manifest = $manifest -replace "%langLabel%", $langLabelHash[$archHash['common']['lang']]
     $manifest = $manifest -replace "%majorVersion%", $archHash['common']['majorVersion']
+    $manifest = $manifest -replace "%checkver_re%", $archHash['common']['checkver_re']
 
     #$manifest | Out-File -FilePath "$PSScriptRoot\..\$key.json" -Encoding utf8
     $manifest | Out-String `
