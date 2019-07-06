@@ -34,7 +34,8 @@
     ",
     "checkver": {
         "url": "http://mergedoc.osdn.jp/pleiades_distros4.8.html",
-        "re": "Pleiades All in One ((?<fileVersion>[\\d.]+).*\\.v(?<date>[\\d]+))"
+        "re": "Pleiades All in One ((?<fileVersion>[\\w\\d\\.]+) \\(Windows (?<date>[\\w\\d\\.]+).+\\))",
+        "replace": "${fileVersion}.v${date}"
     },
     "autoupdate": {
         "architecture": {

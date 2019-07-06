@@ -26,7 +26,8 @@
     ",
     "checkver": {
         "url": "http://mergedoc.osdn.jp/pleiades_distros4.8.html",
-        "re": "Pleiades All in One ((?<fileVersion>[\\d.]+).*\\.v(?<date>[\\d]+))"
+        "re": "Pleiades All in One ((?<fileVersion>[\\w\\d\\.]+) \\(.+, Mac (?<date>[\\w\\d\\.]+)\\))",
+        "replace": "${fileVersion}.v${date}"
     },
     "autoupdate": {
         "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/$majorVersion.$minorVersion/pleiades-$fileVersion-java-win-64bit-jre_$date.zip#/dl.7z"
