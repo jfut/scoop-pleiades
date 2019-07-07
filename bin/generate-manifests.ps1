@@ -41,14 +41,7 @@ $templateString = @"
     "license": "https://www.eclipse.org/legal/epl-v10.html",
     "version": "%version%",
     "architecture": {
-        "64bit": {
-            "url": "%64bit-url%#/dl.7z",
-            "hash": "%64bit-hash%"
-        },
-        "32bit": {
-            "url": "%32bit-url%#/dl.7z",
-            "hash": "%32bit-hash%"
-        }
+%architecture%
     },
     "extract_dir": "pleiades",
     "persist": [
@@ -85,6 +78,19 @@ $templateString = @"
         }
     }
 }
+"@
+
+$templateString64bit = @"
+        "64bit": {
+            "url": "%64bit-url%#/dl.7z",
+            "hash": "%64bit-hash%"
+        }
+"@
+$templateString32bit = @"
+        "32bit": {
+            "url": "%32bit-url%#/dl.7z",
+            "hash": "%32bit-hash%"
+        }
 "@
 
 $baseUrl = "http://mergedoc.osdn.jp/pleiades-redirect/"
@@ -142,7 +148,10 @@ $versionMatch |% {
 #$majorVersions = $("4.3", "4.4")
 #$majorVersions = $("4.5", "4.6", "4.7")
 #$majorVersions = $("4.7","4.8")
+# new date version format
 #$majorVersions = $("2018")
+# 64-bit only
+#$majorVersions = $("2019")
 
 # Generate manifestHash
 $manifestHash = @{}
@@ -330,19 +339,33 @@ $manifestHash.Keys | ForEach-Object {
     } else {
         write-host "$key [64bit, 32bit]"
         $manifest = $templateString
-        $manifest = $manifest -replace "%64bit-url%", $archHash['64bit']['url']
+
+        # 64bit
+        $arch64bit = $templateString64bit
+        $arch64bit = $arch64bit -replace "%64bit-url%", $archHash['64bit']['url']
         $hash = $archHash['64bit']['hash']
         if ($hash -eq $null) {
-            $manifest = $manifest -replace ",\r\n.*%64bit-hash%.*\r\n", "`r`n"
+            $arch64bit = $arch64bit -replace ",\r\n.*%64bit-hash%.*\r\n", "`r`n"
         } else {
-            $manifest = $manifest -replace "%64bit-hash%", $archHash['64bit']['hash']
+            $arch64bit = $arch64bit -replace "%64bit-hash%", $archHash['64bit']['hash']
         }
-        $manifest = $manifest -replace "%32bit-url%", $archHash['32bit']['url']
-        $hash = $archHash['32bit']['hash']
-        if ($hash -eq $null) {
-            $manifest = $manifest -replace ",\r\n.*%32bit-hash%.*\r\n", "`r`n"
+
+        if ($archHash['32bit'] -eq $null) {
+            # 64bit only
+            $manifest = $manifest -replace "%architecture%", $arch64bit
         } else {
-            $manifest = $manifest -replace "%32bit-hash%", $hash
+            # 64bit + 32bit
+            $arch32bit = $templateString32bit
+            $arch32bit = $arch32bit -replace "%32bit-url%", $archHash['32bit']['url']
+            $hash = $archHash['32bit']['hash']
+            if ($hash -eq $null) {
+                $arch32bit = $arch32bit -replace ",\r\n.*%32bit-hash%.*\r\n", "`r`n"
+            } else {
+                $arch32bit = $arch32bit -replace "%32bit-hash%", $hash
+            }
+
+            $architecture = $arch64bit + ",`r`n" + $arch32bit
+            $manifest = $manifest -replace "%architecture%", $architecture
         }
     }
     $manifest = $manifest -replace "%version%", $archHash['common']['version']
