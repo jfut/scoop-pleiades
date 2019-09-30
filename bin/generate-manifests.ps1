@@ -312,6 +312,9 @@ $majorVersions | ForEach-Object {
             $manifestHash.add($key, $archHash)
         }
         write-host ""
+
+        # Mitigate 403 error
+        Start-Sleep -Milliseconds 50
     }
 }
 
