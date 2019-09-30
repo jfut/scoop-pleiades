@@ -1,9 +1,9 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "2019-06.20190831",
-    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2019/pleiades-2019-06-php-mac-jre_20190831.dmg#/dl.7z",
-    "hash": "md5:40578298642a690db9230ced0631cbe7",
+    "version": "2019-09.20190929",
+    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2019/pleiades-2019-09-php-mac-jre_20190929.dmg#/dl.7z",
+    "hash": "md5:2c7846b86fbb807e30b4aa0fb0c4aecd",
     "extract_dir": "pleiades",
     "persist": [
         "eclipse\\configuration",
@@ -12,7 +12,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One PHP 2019-06.20190831"
+            "Pleiades All in One PHP 2019-09.20190929"
         ]
     ],
     "post_install": "
