@@ -1,9 +1,9 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "2019-12.20191225",
-    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2019/pleiades-2019-12-cpp-mac_20191225.dmg#/dl.7z",
-    "hash": "md5:460984f340f74bff4af1e8d9016b2c54",
+    "version": "2019-12.20200205",
+    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2019/pleiades-2019-12-cpp-mac_20200205.dmg#/dl.7z",
+    "hash": "md5:75ccb30a0fa9bc971f3ffd828093072b",
     "extract_dir": "pleiades",
     "persist": [
         "eclipse\\configuration",
@@ -12,7 +12,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One CDT 2019-12.20191225"
+            "Pleiades All in One CDT 2019-12.20200205"
         ]
     ],
     "post_install": "

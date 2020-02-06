@@ -1,11 +1,11 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "2019-12.20191225",
+    "version": "2019-12.20200205",
     "architecture": {
         "64bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2019/pleiades-2019-12-platform-win-64bit_20191225.zip#/dl.7z",
-            "hash": "md5:9f23cc3d7059074621c897f0fd948c0f"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2019/pleiades-2019-12-platform-win-64bit_20200205.zip#/dl.7z",
+            "hash": "md5:3467468c722c345747b4781040dc1650"
         }
     },
     "extract_dir": "pleiades",
@@ -16,7 +16,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One Platform 2019-12.20191225"
+            "Pleiades All in One Platform 2019-12.20200205"
         ]
     ],
     "post_install": "
