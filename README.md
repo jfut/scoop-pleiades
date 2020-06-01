@@ -12,15 +12,7 @@ scoop bucket add pleiades https://github.com/jfut/scoop-pleiades.git
 
 ## Supported Versions
 
-- Pleiades All in One 2019-06 (Eclipse 2019-06)
-- Pleiades All in One 2018-09 (Eclipse 2018-09)
-- Pleiades All in One 4.8 (Eclipse 4.8 Photon)
-- Pleiades All in One 4.7 (Eclipse 4.7 Oxygen)
-- Pleiades All in One 4.6 (Eclipse 4.6 Neon)
-- Pleiades All in One 4.5 (Eclipse 4.5 Mars)
-- Pleiades All in One 4.4 (Eclipse 4.4 Luna)
-- Pleiades All in One 4.3 (Eclipse 4.3 Keplar)
-- Pleiades All in One 4.2 (Eclipse 4.2 Juno)
+- Pleiades All in One 4.2 (Eclipse 4.2 Juno) or later
 
 To install:
 
