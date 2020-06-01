@@ -14,19 +14,21 @@ scoop bucket add pleiades https://github.com/jfut/scoop-pleiades.git
 
 - Pleiades All in One 4.2 (Eclipse 4.2 Juno) or later
 
+## Install
+
 To install:
 
 ```
-scoop install pleiades2019-java-win-full
+scoop install pleiades2020-java-win-full
 ```
 
 To install with global:
 
 ```
-sudo scoop install pleiades2019-java-win-full -g
+sudo scoop install pleiades2020-java-win-full -g
 ```
 
-# Official buckets
+## Official buckets
 
 - [main bucket](https://github.com/ScoopInstaller/Main)
 - [extras bucket](https://github.com/lukesampson/scoop-extras)
