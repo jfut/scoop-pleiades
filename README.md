@@ -19,13 +19,13 @@ scoop bucket add pleiades https://github.com/jfut/scoop-pleiades.git
 To install:
 
 ```
-scoop install pleiades2020-java-win-full
+scoop install pleiades2021-java-win-full
 ```
 
 To install with global:
 
 ```
-sudo scoop install pleiades2020-java-win-full -g
+sudo scoop install pleiades2021-java-win-full -g
 ```
 
 ## Official buckets
