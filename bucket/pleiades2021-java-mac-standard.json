@@ -1,9 +1,9 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "2021-12.20211219",
-    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2021/pleiades-2021-12-java-mac_20211219.dmg#/dl.7z",
-    "hash": "md5:998b615718f16b43f21cb205c8e3e173",
+    "version": "2021-12.20220106",
+    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2021/pleiades-2021-12-java-mac_20220106.dmg#/dl.7z",
+    "hash": "md5:e386eef5ab93b1fa61a0a7c39595eca5",
     "extract_dir": "pleiades",
     "persist": [
         "eclipse\\configuration",
@@ -12,7 +12,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One Java 2021-12.20211219"
+            "Pleiades All in One Java 2021-12.20220106"
         ]
     ],
     "post_install": "
