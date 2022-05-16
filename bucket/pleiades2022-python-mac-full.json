@@ -1,9 +1,9 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "2022-06.20220505",
-    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2022/pleiades-2022-06-python-mac-jre_20220505.dmg#/dl.7z",
-    "hash": "md5:f9f3fda88d119045fb9c28c603a79529",
+    "version": "2022-06.20220515",
+    "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2022/pleiades-2022-06-python-mac-jre_20220515.dmg#/dl.7z",
+    "hash": "md5:e3ef2a03264245d1e762e61088e9ea5b",
     "extract_dir": "pleiades",
     "persist": [
         "eclipse\\configuration",
@@ -12,7 +12,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One Python 2022-06.20220505"
+            "Pleiades All in One Python 2022-06.20220515"
         ]
     ],
     "post_install": "
