@@ -1,11 +1,11 @@
 {
     "homepage": "http://mergedoc.osdn.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
-    "version": "2022-09.20220914",
+    "version": "2022-09.20221018",
     "architecture": {
         "64bit": {
-            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2022/pleiades-2022-09-java-win-64bit_20220914.exe#/dl.7z",
-            "hash": "md5:849c40badab801da8b7a417a68a16d66"
+            "url": "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/2022/pleiades-2022-09-java-win-64bit_20221018.exe#/dl.7z",
+            "hash": "md5:f8f311aaeab4381c9f34868decdd5f24"
         }
     },
     "extract_dir": "pleiades",
@@ -16,7 +16,7 @@
     "shortcuts": [
         [
             "eclipse/eclipse.exe",
-            "Pleiades All in One Java 2022-09.20220914"
+            "Pleiades All in One Java 2022-09.20221018"
         ]
     ],
     "post_install": "
