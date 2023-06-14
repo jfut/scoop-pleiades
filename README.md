@@ -31,5 +31,5 @@ sudo scoop install pleiades2023-java-win-full -g
 ## Official buckets
 
 - [main bucket](https://github.com/ScoopInstaller/Main)
-- [extras bucket](https://github.com/lukesampson/scoop-extras)
+- [extras bucket](https://github.com/ScoopInstaller/Extras)
 
