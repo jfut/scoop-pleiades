@@ -16,16 +16,16 @@ scoop bucket add pleiades https://github.com/jfut/scoop-pleiades.git
 
 ## Install
 
-To install:
+To install the Pleiades All in One Eclipse Java Full Edition for Windows:
 
 ```
-scoop install pleiades2021-java-win-full
+scoop install pleiades2023-java-win-full
 ```
 
 To install with global:
 
 ```
-sudo scoop install pleiades2021-java-win-full -g
+sudo scoop install pleiades2023-java-win-full -g
 ```
 
 ## Official buckets
