@@ -136,9 +136,10 @@ function match_lang_os_arch_edition($matches, $lang, $os, $arch, $edition) {
 $wc = new-object net.webclient
 $html = $wc.downloadstring("$baseUrl")
 
-# TODO: 3.x support
-# 4.3 - 4.8, 20YY
-$versionMatch = ([regex]">(4[\d.]+|20\d\d)/").matches($html)
+# Target: 4.3 - 4.8, 20YY
+# $versionMatch = ([regex]">(4[\d.]+|20\d\d)/").matches($html)
+# Target: 20YY only
+$versionMatch = ([regex]">(20\d\d)/").matches($html)
 $majorVersions = @()
 $versionMatch |% {
     $majorVersions += $_.groups[1].value
