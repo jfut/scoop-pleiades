@@ -1,6 +1,6 @@
 $templateStringNoarch = @"
 {
-    "homepage": "http://mergedoc.osdn.jp/",
+    "homepage": "https://willbrains.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
     "version": "%version%",
     "url": "%url%#/dl.7z",
@@ -26,7 +26,7 @@ $templateStringNoarch = @"
         `$shortcut.Save()
     ",
     "checkver": {
-        "url": "http://mergedoc.osdn.jp/pleiades_distros%majorVersion%.html",
+        "url": "https://willbrains.jp/pleiades_distros%majorVersion%.html",
         "re": "%checkver_re%"
     },
     "autoupdate": {
@@ -37,7 +37,7 @@ $templateStringNoarch = @"
 
 $templateString = @"
 {
-    "homepage": "http://mergedoc.osdn.jp/",
+    "homepage": "https://willbrains.jp/",
     "license": "https://www.eclipse.org/legal/epl-v10.html",
     "version": "%version%",
     "architecture": {
@@ -64,7 +64,7 @@ $templateString = @"
         `$shortcut.Save()
     ",
     "checkver": {
-        "url": "http://mergedoc.osdn.jp/pleiades_distros%majorVersion%.html",
+        "url": "https://willbrains.jp/pleiades_distros%majorVersion%.html",
         "re": "%checkver_re%"
     },
     "autoupdate": {
@@ -93,8 +93,8 @@ $templateString32bit = @"
         }
 "@
 
-$baseUrl = "http://mergedoc.osdn.jp/pleiades-redirect/"
-$baseVersionUrl = "http://mergedoc.osdn.jp/pleiades_distros"
+$baseUrl = "https://willbrains.jp"
+$baseVersionUrl = "https://willbrains.jp/pleiades_distros"
 $baseDownloadUrl = "http://ftp.jaist.ac.jp/pub/mergedoc/pleiades/"
 
 $langLabelHash = @{
@@ -134,7 +134,9 @@ function match_lang_os_arch_edition($matches, $lang, $os, $arch, $edition) {
 
 # Fetch majorVersions
 $wc = new-object net.webclient
-$html = $wc.downloadstring("$baseUrl")
+# https://willbrains.jp/pleiades.html
+write-host "# Check top page: $baseUrl/pleiades.html"
+$html = $wc.downloadstring("$baseUrl/pleiades.html")
 
 # Target: 4.3 - 4.8, 20YY
 # $versionMatch = ([regex]">(4[\d.]+|20\d\d)/").matches($html)
@@ -156,19 +158,25 @@ $versionMatch |% {
 
 # Generate manifestHash
 $manifestHash = @{}
+# 2024 2023 2022 2021 ...
 $majorVersions | ForEach-Object {
     $majorVersion = $_
-    $versionHtml = $wc.downloadstring("$baseUrl/$majorVersion/")
-    $linkMatch = ([regex]">(pleiades_.+zip.html)<").matches($versionHtml)
+    # https://willbrains.jp/pleiades_distros2024.html
+    write-host "# Check version page: $baseUrl/pleiades_distros$majorVersion.html"
+    $versionHtml = $wc.downloadstring("$baseUrl/pleiades_distros$majorVersion.html")
+    # <td align="center"><a target="_self" href="pleiades-redirect/2024/pleiades_platform-win-64bit_jre.zip.html?v=20240917"><div class="download_full">
+    $linkMatch = ([regex]'(pleiades_.+\.zip\.html)\?v=(\d+)').matches($versionHtml)
+
     $linkMatch |% {
         $link = $_.groups[1].value
+        $version = $_.groups[2].value
 
         # debug
         #if ($link -match "^(?!.*java)") {
         #    return
         #}
 
-        write-host "# $link" -ForegroundColor Yellow
+        write-host "# $link, version: $version" -ForegroundColor Yellow
 
         # Fetch parameters
         $os = "win"
@@ -218,9 +226,7 @@ $majorVersions | ForEach-Object {
             return
         }
 
-        # Fetch version
-        $version = ""
-        $versionHtml = $wc.downloadstring("$baseVersionUrl$majorVersion.html")
+        # Dtect version
         # format: Pleiades All in One 4.8.0 (Windows 20180923, Mac 20180627)
         if ($os -match "win") {
             if ($versionHtml -match "Pleiades All in One (?<fileVersion>\d[\w\.]+) \(Windows (?<date>\d+)") {
@@ -248,8 +254,9 @@ $majorVersions | ForEach-Object {
         #write-host " - version, $version"
 
         # Fetch file name and hash
-        $downloadUrl = "$baseUrl$majorVersion/$link"
-        #write-host " - downloadUrl, $downloadUrl"
+        # https://willbrains.jp/pleiades-redirect/2024/pleiades_python-win-64bit_jre.zip.html
+        $downloadUrl = "$baseUrl/pleiades-redirect/$majorVersion/$link"
+        write-host " - downloadUrl, $downloadUrl"
         # Special case
         if ($majorVersion -eq "4.5" -and $link -eq "pleiades_java-32bit_jre.zip.html") {
             $downloadUrl = "$baseUrl$majorVersion/pleiades_java-32bit_jre.zip_MD5.html"
@@ -319,6 +326,9 @@ $majorVersions | ForEach-Object {
     }
 }
 
+# debug
+# return 0
+
 #
 # Generate manifest files from $manifestHash
 #
@@ -326,12 +336,13 @@ $majorVersions | ForEach-Object {
 # pleiades-java-win-full.json
 # pleiades47-java-win-full.json
 # pleiades2018-java-win-full.json
-write-host "# outpue manifest file"
+write-host "# Outpue manifest file"
 $manifestHash.Keys | ForEach-Object {
     $key = $_
+    $outputFilePath = [System.IO.Path]::GetFullPath("$PSScriptRoot\..\bucket\$key.json")
     $archHash = $manifestHash[$key]
     if ($archHash.contains('noarch')) {
-        write-host "$key [noarch]"
+        write-host "$key [noarch]: $outputFilePath"
         $manifest = $templateStringNoarch
         $manifest = $manifest -replace "%url%", $archHash['noarch']['url']
         $hash = $archHash['noarch']['hash']
@@ -341,7 +352,7 @@ $manifestHash.Keys | ForEach-Object {
             $manifest = $manifest -replace "%hash%", $archHash['noarch']['hash']
         }
     } else {
-        write-host "$key [64bit, 32bit]"
+        write-host "$key [64bit, 32bit]: $outputFilePath"
         $manifest = $templateString
 
         # 64bit
@@ -377,10 +388,10 @@ $manifestHash.Keys | ForEach-Object {
     $manifest = $manifest -replace "%majorVersion%", $archHash['common']['majorVersion']
     $manifest = $manifest -replace "%checkver_re%", $archHash['common']['checkver_re']
 
-    #$manifest | Out-File -FilePath "$PSScriptRoot\..\$key.json" -Encoding utf8
+    #$manifest | Out-File -FilePath "$outputFilePath" -Encoding utf8
     $manifest | Out-String `
         | % { [Text.Encoding]::UTF8.GetBytes($_) } `
-        | Set-Content -Path "$PSScriptRoot\..\bucket\$key.json" -Encoding Byte
+        | Set-Content -Path "$outputFilePath" -Encoding Byte
 }
 
 # Use scoop's checkver script to autoupdate the manifestHash
