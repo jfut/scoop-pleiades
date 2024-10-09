@@ -272,8 +272,8 @@ $majorVersions | ForEach-Object {
 
         # extract_dir
         $extract_dir = "pleiades"
-        # [2024 or later]
-        if ($majorVersion.Length -eq 4 -and $majorVersion -ge "2024") {
+        # [2023 or later]
+        if ($majorVersion.Length -eq 4 -and $majorVersion -ge "2023") {
             $extract_dir = ""
         }
         write-host " - extract_dir, $extract_dir"
