@@ -5,7 +5,7 @@ $templateStringNoarch = @"
     "version": "%version%",
     "url": "%url%#/dl.7z",
     "hash": "%hash%",
-    "extract_dir": "pleiades",
+    "extract_dir": "%extract_dir%",
     "persist": [
         "eclipse\\configuration",
         "workspace"
@@ -43,7 +43,7 @@ $templateString = @"
     "architecture": {
 %architecture%
     },
-    "extract_dir": "pleiades",
+    "extract_dir": "%extract_dir%",
     "persist": [
         "eclipse\\configuration",
         "workspace"
@@ -226,7 +226,7 @@ $majorVersions | ForEach-Object {
             return
         }
 
-        # Dtect version
+        # Detect version
         # format: Pleiades All in One 4.8.0 (Windows 20180923, Mac 20180627)
         if ($os -match "win") {
             if ($versionHtml -match "Pleiades All in One (?<fileVersion>\d[\w\.]+) \(Windows (?<date>\d+)") {
@@ -270,7 +270,15 @@ $majorVersions | ForEach-Object {
             $hash = "md5:" + $matches['hash']
         }
 
-        # Detect checkver
+        # extract_dir
+        $extract_dir = "pleiades"
+        # [2024 or later]
+        if ($majorVersion.Length -eq 4 -and $majorVersion -ge "2024") {
+            $extract_dir = ""
+        }
+        write-host " - extract_dir, $extract_dir"
+
+        # checkver
         # [4.2 - 4.6]
         $checkver_re = $checkverRegex['base_version']
         # [4.7 - 4.8]
@@ -295,7 +303,7 @@ $majorVersions | ForEach-Object {
         write-host " - [key] $key, $downloadFile, $hash"
         $archHash = @{}
         if ($manifestHash.contains($key)) {
-            write-host " - [update] $key, $lang, $os, $arch, $edition"
+            write-host " - [update] $key, $extract_dir, $lang, $os, $arch, $edition"
             $archHash = $manifestHash[$key]
             if (! $archHash.contains($arch)) {
                 $archHash.add($arch, @{
@@ -304,10 +312,11 @@ $majorVersions | ForEach-Object {
                 })
             }
         } else {
-            write-host " - [new] $key, $lang, $os, $arch, $edition"
+            write-host " - [new] $key, $extract_dir, $lang, $os, $arch, $edition"
             $archHash.add("common", @{
                 version = $version;
                 majorVersion = $majorVersion;
+                extract_dir = $extract_dir;
                 lang = $lang;
                 os = $os;
                 edition = $edition;
@@ -384,6 +393,7 @@ $manifestHash.Keys | ForEach-Object {
         }
     }
     $manifest = $manifest -replace "%version%", $archHash['common']['version']
+    $manifest = $manifest -replace "%extract_dir%", $archHash['common']['extract_dir']
     $manifest = $manifest -replace "%langLabel%", $langLabelHash[$archHash['common']['lang']]
     $manifest = $manifest -replace "%majorVersion%", $archHash['common']['majorVersion']
     $manifest = $manifest -replace "%checkver_re%", $archHash['common']['checkver_re']
