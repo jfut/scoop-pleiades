@@ -2,7 +2,7 @@
 
 The "pleiades" bucket for [Scoop](http://scoop.sh).
 
-- [Pleiades All in One](http://mergedoc.osdn.jp/)
+- [Pleiades All in One](https://willbrains.jp/)
 
 To make it easy to install apps from this bucket, run
 
@@ -32,4 +32,3 @@ sudo scoop install pleiades2023-java-win-full -g
 
 - [main bucket](https://github.com/ScoopInstaller/Main)
 - [extras bucket](https://github.com/ScoopInstaller/Extras)
-
